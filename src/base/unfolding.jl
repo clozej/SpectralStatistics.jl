@@ -1,5 +1,3 @@
-include("datasample.jl")
-
 using Polynomials
 using LsqFit
 
