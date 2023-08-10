@@ -14,24 +14,31 @@ end
 =#
 
 #this version is slightly faster
-function spectral_form_factor(E::Vector{Real}, t::Real)
+function spectral_form_factor(E::Vector{T}, t::T) where T<:Real
     sff = complex(0.0)
     for e in E
         sff += exp(im * e * t * 2*pi)
     end
+    return abs2(sff)
+end
 
-    return real(sff)^2 + imag(sff)^2
+function spectral_form_factor(E::Vector{T}, t::T, f::Function; fkwargs::D) where {T<:Real, D<:Dict}
+    sff = complex(0.0)
+    for e in E
+        sff += f(e;fkwargs...)*exp(im * e * t * 2*pi)
+    end
+    return abs2(sff)
 end
 
 
-function spectral_form_factor(spect::UnfoldedSpectrum, ts::Vector{Real})
+function spectral_form_factor(spect::UnfoldedSpectrum, ts::Vector{T}) where T<:Real
     E =spect.data
-    sff = zeros(length(ts)) 
+    grid = length(ts)
+    sff = zeros(grid) 
     Threads.@threads for i in 1:grid
         sff[i] = spectral_form_factor(E, ts[i])        
     end
     return ts, sff
-    
 end
 
 SFF = spectral_form_factor

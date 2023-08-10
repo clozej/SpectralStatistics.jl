@@ -24,3 +24,23 @@ function match_split(a, split)
     end
     return [a[idx] for idx in indices] 
 end
+
+function moving_average(A::AbstractArray, m::Int)
+    out = similar(A)
+    R = CartesianIndices(A)
+    Ifirst, Ilast = first(R), last(R)
+    I1 = m÷2 * oneunit(Ifirst)
+    for I in R
+        n, s = 0, zero(eltype(out))
+        for J in max(Ifirst, I-I1):min(Ilast, I+I1)
+            s += A[J]
+            n += 1
+        end
+        out[I] = s/n
+    end
+    return out
+end
+
+function gaussian(x;mu=0.0,sigma=1.0)
+    return @. 1.0/(sigma*sqrt(2.0*pi))*exp(-0.5*((x-mu)/sigma)^2.0)
+end
