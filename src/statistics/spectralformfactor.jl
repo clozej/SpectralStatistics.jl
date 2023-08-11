@@ -1,4 +1,3 @@
-include("../base/datasample.jl")
 
 #=
 function spectral_form_factor(t::Float64, E::Vector{Float64})

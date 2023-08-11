@@ -1,4 +1,3 @@
-using SpecialFunctions 
 
 struct Brody <: Model 
 beta::Float64

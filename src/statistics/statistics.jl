@@ -1,6 +1,0 @@
-include("modefluctuations.jl")
-include("levelspacings.jl")
-include("numbervariance.jl")
-include("rigidity.jl")
-include("spectralformfactor.jl")
-include("lengthspectrum.jl")

@@ -1,5 +1,3 @@
-using SpecialFunctions 
-using Base.MathConstants
 
 
 struct GOE <: Model end

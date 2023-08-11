@@ -1,4 +1,3 @@
-using SpecialFunctions 
 
 struct Gamma <: Model 
     gamma::Float64
