@@ -1,6 +1,4 @@
 
-include("../base/probability.jl")
-include("../base/datasample.jl")
 
 function level_spacing(spect::DataSample; n::Int = 1)
     e = spect.data

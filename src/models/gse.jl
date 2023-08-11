@@ -1,6 +1,3 @@
-using SpecialFunctions 
-using Base.MathConstants
-
 
 struct GSE <: Model end
 

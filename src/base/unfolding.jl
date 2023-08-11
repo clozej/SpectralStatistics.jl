@@ -1,18 +1,50 @@
-using Polynomials
-using LsqFit
 
 
-function unfold_spectrum(spect::DataSample, f::Function ) #f is the unfolding function
+export unfold_spectrum, weyl_law
+
+"""
+    unfold_spectrum(spect::DataSample, f::Function) → unfolded::UnfoldedSpectrum
+
+Return the unfolded spectrum of `spect` by using the function `f` 
+as the smooth part of the integrated density of states.
+
+## Arguments
+
+* `spect`: Spectrum to be unfolded.
+*  `f(x)` : Function modeling the smooth part of the integrated density of states,
+where the argument `x` is the energy.  
+"""
+function unfold_spectrum(spect::DataSample, f::Function) #f is the unfolding function
     unfolded = @. f(spect.data)
     return UnfoldedSpectrum(unfolded)
 end
 
+"""
+    unfold_spectrum(spect::DataSample, n::Int) → unfolded::UnfoldedSpectrum
+
+Return the unfolded spectrum of `spect` by fitting a polynomial of degree `n` 
+to the integrated density of states.
+## Arguments
+
+* `spect`: Spectrum to be unfolded.
+* `n` : Degree of polynomial moddeling the smooth part of the integrated density of states.
+"""
 function unfold_spectrum(spect::DataSample, n::Int ) #f is the unfolding function
     coeffs = fit_integrated_density(spect, n)
     unfolded = [evalpoly(x, coeffs) for x in spect.data]
     return UnfoldedSpectrum(unfolded)
 end
 
+"""
+    unfold_spectrum(spect::DataSample, n::Int, cut_values) → unfolded::UnfoldedSpectrum
+
+Return the unfolded spectrum of `spect` by piecewise fitting polynomials of degree `n` 
+to the integrated density of states.
+
+* `spect`: Spectrum to be unfolded.
+* `n` : Degree of polynomial moddeling the smooth part of the integrated density of states.
+* `cut_values` : Relative positions of the cuts between the spectral pieces.  
+"""
 function unfold_spectrum(spect::DataSample, n::Int, cut_values) 
     x = spect.data
     l = x[end] - x[1]

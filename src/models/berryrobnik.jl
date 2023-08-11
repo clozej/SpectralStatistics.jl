@@ -1,5 +1,3 @@
-include("brody.jl")
-include("goe.jl")
 
 struct BerryRobnik <: Model 
     # rho is Liouville measure of the regular component
