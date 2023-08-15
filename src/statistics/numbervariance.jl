@@ -1,5 +1,5 @@
+export number_variance
 
-using StatsBase
 
 function number_variance(E, L)
     #algorithm by Tomaz Prosen
@@ -51,4 +51,4 @@ function number_variance(spect::S, x::Vector{T}) where {S<:DataSample, T<:Number
 end
 
 
-NV = number_variance
+#NV = number_variance

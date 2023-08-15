@@ -1,4 +1,4 @@
-
+export spectral_form_factor
 #=
 function spectral_form_factor(t::Float64, E::Vector{Float64})
     sff_imag = 0.0

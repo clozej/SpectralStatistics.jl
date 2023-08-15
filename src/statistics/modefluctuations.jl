@@ -1,7 +1,5 @@
 
 
-using StatsBase
-
 function mode_fluctuations(spect::UnfoldedSpectrum)
     e = spect.data
     e0 = round(e[1]) - 1.0
