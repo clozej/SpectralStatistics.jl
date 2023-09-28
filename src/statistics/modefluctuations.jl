@@ -1,13 +1,11 @@
 
 
-using StatsBase
-
 function mode_fluctuations(spect::UnfoldedSpectrum)
     e = spect.data
     e0 = round(e[1]) - 1.0
     println(e0)
     s = [float(i) for i in 1:length(e)] 
-    return e, s .- e .+ e0
+    return s .- e .+ e0
 end
 
 #=

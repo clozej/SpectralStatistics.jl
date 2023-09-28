@@ -11,8 +11,10 @@ as the smooth part of the integrated density of states.
 ## Arguments
 
 * `spect`: Spectrum to be unfolded.
-*  `f(x)` : Function modeling the smooth part of the integrated density of states,
-where the argument `x` is the energy.  
+*  `f(x)` : Function modeling the smooth part of the integrated density of states, where the argument `x` is the energy.
+
+## Returns
+*  `unfolded` : The unfolded spectrum as an instance of type [`UnfoldedSpectrum`](@ref).
 """
 function unfold_spectrum(spect::DataSample, f::Function) #f is the unfolding function
     unfolded = @. f(spect.data)
@@ -24,9 +26,8 @@ end
 
 Return the unfolded spectrum of `spect` by fitting a polynomial of degree `n` 
 to the integrated density of states.
-## Arguments
 
-* `spect`: Spectrum to be unfolded.
+## Arguments
 * `n` : Degree of polynomial moddeling the smooth part of the integrated density of states.
 """
 function unfold_spectrum(spect::DataSample, n::Int ) #f is the unfolding function
@@ -41,8 +42,7 @@ end
 Return the unfolded spectrum of `spect` by piecewise fitting polynomials of degree `n` 
 to the integrated density of states.
 
-* `spect`: Spectrum to be unfolded.
-* `n` : Degree of polynomial moddeling the smooth part of the integrated density of states.
+## Arguments
 * `cut_values` : Relative positions of the cuts between the spectral pieces.  
 """
 function unfold_spectrum(spect::DataSample, n::Int, cut_values) 

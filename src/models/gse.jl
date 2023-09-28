@@ -1,4 +1,26 @@
+export GSE
 
+"""
+GSE <: Model 
+
+`GSE` is a concrete type used to represent the Gaussian Symplectic Ensemble model of random matrix theory. 
+
+## Description
+Based on the Bohigas-Giannoni-Schmit conjecture this model describes the spectral statistics (in the semiclassical limit) 
+of chaotic systems, invariant under time-reversal symmetry and including spin 1/2 interactions.
+
+## Attributes
+This model has no attributes.
+
+## API
+The following spectral statistcs can be evaluated for this model:
+- [`level_spacing_pdf`](@ref)
+- [`level_spacing_cdf`](@ref)
+- [`level_spacing_u`](@ref)
+- [`number_variance`](@ref)
+- [`rigidity`](@ref)
+- [`spectral_form_factor`](@ref)
+"""
 struct GSE <: Model end
 
 
@@ -25,7 +47,7 @@ end
 
 function level_spacing_u(model::GSE, s)
     cdf = level_spacing_cdf(model, s)
-    return @. (2.0 / pi) * acos(sqrt(1.0 - cdf))    
+    return @. (2.0 / pi) * acos(sqrt(abs(1.0 - cdf)))    
 end
 
 function gap_probability(model::GSE, s)

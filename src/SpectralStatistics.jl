@@ -20,6 +20,14 @@ include("base/datasample.jl")
 include("base/probability.jl")
 include("base/unfolding.jl")
 
+export Model
+"""
+    Model
+
+`Model` is an abstract supertype encompassing all concrete implementations of 
+the analytical spectral statistics models in the SpectralStatistics.jl library.
+
+"""
 abstract type Model end
 
 include("models/poisson.jl")

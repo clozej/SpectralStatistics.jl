@@ -1,4 +1,4 @@
-
+export spectral_form_factor
 #=
 function spectral_form_factor(t::Float64, E::Vector{Float64})
     sff_imag = 0.0
@@ -37,7 +37,7 @@ function spectral_form_factor(spect::UnfoldedSpectrum, ts::Vector{T}) where T<:R
     Threads.@threads for i in 1:grid
         sff[i] = spectral_form_factor(E, ts[i])        
     end
-    return ts, sff
+    return sff
 end
 
 SFF = spectral_form_factor
