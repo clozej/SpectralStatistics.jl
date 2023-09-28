@@ -16,5 +16,5 @@ function length_spectrum(ls::Vector{T}, rho_fluct::Vector{T}, ks::Vector{T}) whe
     Threads.@threads for i in 1:grid
         l_spec[i] = length_spectrum(ls[i],rho_fluct,ks)        
     end
-    return ls, l_spec
+    return l_spec
 end

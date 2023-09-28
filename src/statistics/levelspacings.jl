@@ -48,13 +48,12 @@ The nearest neighbour level spacing distributions are the most commonly studied 
 *  `n=1` : The order of the level spacings.
 
 ## Returns
-*  `s` : Vector of the middle positions of the histogram bins.
 
 *  `p` : Vector of the probability contained in each bin.
 """
-function level_spacing_pdf(spect::UnfoldedSpectrum, bins::Vector{T}; n::Int = 1) where T<:Real
+function level_spacing_pdf(spect::UnfoldedSpectrum, pts::Vector{T}; n::Int = 1) where T<:Real
     s = level_spacing(spect; n=n)
-    return pdf_hist(s, bins)
+    return pdf_hist(s, pts)
 end
 
 """
@@ -72,7 +71,6 @@ The nearest neighbour level spacings are the default, given by n=1.
 *  `n=1` : The order of the level spacings.
 
 ## Returns
-*  `s` : Vector of the evaluation points.
 
 *  `w` : Vector of the cumulative probabilities.
 """
@@ -107,7 +105,6 @@ where ``W(s)`` is the cumulative level spacing distribution.
 *  `n=1` : The order of the level spacings.
 
 ## Returns
-*  `s` : Vector of the evaluation points.
 
 *  `u` : Vector of the cumulative probabilities.
 """

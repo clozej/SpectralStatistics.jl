@@ -47,7 +47,7 @@ function number_variance(spect::S, x::Vector{T}) where {S<:DataSample, T<:Number
     Threads.@threads for i in 1:sz
         nvs[i] = number_variance(E, Ls[i])        
     end
-    return x, nvs
+    return nvs
 end
 
 

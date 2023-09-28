@@ -47,7 +47,7 @@ end
 
 function level_spacing_u(model::GSE, s)
     cdf = level_spacing_cdf(model, s)
-    return @. (2.0 / pi) * acos(sqrt(1.0 - cdf))    
+    return @. (2.0 / pi) * acos(sqrt(abs(1.0 - cdf)))    
 end
 
 function gap_probability(model::GSE, s)

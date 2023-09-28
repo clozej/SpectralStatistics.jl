@@ -25,14 +25,21 @@ Gamma((d::Dict)) = Gamma(d[:gamma])
 
 function level_spacing_pdf(model::Gamma, s)
     g = model.gamma
-    A = (g+1.0)
-    C = A^(g + 1.0) / gamma(g + 1.0)
-    return @. C * s^g * exp(-A * s)
+    A = g + 1.0
+    B = g + 1.0
+    C = B^A / gamma(A)
+    return @. C * s^(A - 1.0) * exp(-B * s)
 end
 
 function level_spacing_cdf(model::Gamma, s)
     g = model.gamma
-    A = (g+1.0)
-    return @. gamma_inc(g, A*s)
+    A = g + 1.0
+    B = g + 1.0
+    C = 1.0 / gamma(A)
+    return [C*gamma_inc(A, B * si)[1] for si in s]
 end
 
+function level_spacing_u(model::Gamma, s)
+    cdf = level_spacing_cdf(model, s)
+    return @. (2.0 / pi) * acos(sqrt(abs(1.0 - cdf)))
+end

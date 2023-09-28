@@ -37,7 +37,7 @@ function spectral_form_factor(spect::UnfoldedSpectrum, ts::Vector{T}) where T<:R
     Threads.@threads for i in 1:grid
         sff[i] = spectral_form_factor(E, ts[i])        
     end
-    return ts, sff
+    return sff
 end
 
 SFF = spectral_form_factor

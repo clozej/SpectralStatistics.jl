@@ -2,21 +2,26 @@
 
 #Ideally one would do this programatically using metaprograming
 
-function pdf_hist(var, bins)
+function pdf_hist(var, pts)
+    bins = midpoints(pts)
+    prepend!(bins, 0.0)
+    last_dist = bins[end] - bins[end-1]
+    last_pt = bins[end] + last_dist/2.0 
+    append!(bins,last_pt)
     h = StatsBase.fit(Histogram, var, bins)
     h = StatsBase.normalize(h, mode=:pdf)
-    return midpoints(bins), h.weights
+    return h.weights
 end
 
 function cdf(var, pts)
     f = StatsBase.ecdf(var)
-    return pts, f(pts)
+    return f(pts)
 end
 
 function u_cdf(var, pts)
     f = StatsBase.ecdf(var)
-    U(w) = (2.0 / pi) * arccos.(sqrt.(1.0 - f(w)))
-    return pts, U(pts)
+    U(w) = @. (2.0 / pi) * acos(sqrt(abs(1.0 - f(w))))
+    return U(pts)
 end
 
 

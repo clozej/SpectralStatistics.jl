@@ -95,7 +95,7 @@ Return the analytical expression for the spectraly normalized cumulative density
 """
 function level_spacing_u(model::Poisson, s)
     cdf = level_spacing_cdf(model, s)
-    return @. (2.0 / pi) * acos(sqrt(1.0 - cdf))
+    return @. (2.0 / pi) * acos(sqrt(abs(1.0 - cdf)))
 end
 
 function gap_probability(model::Poisson, s)
