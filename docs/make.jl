@@ -11,3 +11,7 @@ format = Documenter.HTML(
 )
 
 )
+
+deploydocs(
+    repo = "github.com/clozej/SpectralStatistics.jl.git",
+)
