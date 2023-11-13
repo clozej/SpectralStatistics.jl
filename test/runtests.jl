@@ -1,5 +1,5 @@
-include("../src/SpectralStatistics.jl")
-#using SpectralStatistics
+#include("../src/SpectralStatistics.jl")
+using SpectralStatistics
 using Test
 
 @testset "models" begin

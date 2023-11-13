@@ -24,7 +24,6 @@ level_spacing
 level_spacing_pdf
 level_spacing_cdf
 level_spacing_u
-level_spacing_ratio 
 ```
 
 ## Analytical models
