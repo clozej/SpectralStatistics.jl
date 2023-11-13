@@ -28,7 +28,7 @@ struct Poisson <: Model end
 #first argument of all functions is the variable
 
 """
-    level_spacing_pdf(model::Model, pts::Vector; n::Int = 1) → s::Vector p::Vector
+    level_spacing_pdf(model::Model, pts::Vector; n::Int = 1) → p::Vector
 
 Return the analytical expression for the level spacing probability density function, corresponding to the chosen model, evaluated at positions `pts`.
 
@@ -44,7 +44,6 @@ The nearest neighbour level spacing distributions are the most commonly studied 
 *  `n=1` : The order of the level spacings.
 
 ## Returns
-*  `s` : Vector of the evaluation points.
 
 *  `p` : Vector of the probabilites.
 """
@@ -53,7 +52,7 @@ function level_spacing_pdf(model::Poisson, s ; n=1)
 end
 
 """
-    level_spacing_cdf(model::Model, pts::Vector; n::Int = 1) → s::Vector w::Vector
+    level_spacing_cdf(model::Model, pts::Vector; n::Int = 1) → w::Vector
 
 Return the analytical expression for level spacing cumulative density function, corresponding to the chosen model, evaluated at positions `pts`.
 
@@ -66,7 +65,6 @@ Return the analytical expression for level spacing cumulative density function, 
 *  `n=1` : The order of the level spacings.
 
 ## Returns
-*  `s` : Vector of the evaluation points.
 
 *  `w` : Vector of the cumulative probabilities.
 """
@@ -75,7 +73,7 @@ function level_spacing_cdf(model::Poisson, s; n=1)
 end
 
 """
-    level_spacing_u(spect::UnfoldedSpectrum, pts::Vector; n::Int = 1) → s::Vector u::Vector
+    level_spacing_u(model::Model, pts::Vector; n::Int = 1) → u::Vector
 
 Return the analytical expression for the spectraly normalized cumulative density function of the nearest neighbour level spacings evaluated at positions `pts`.
 
@@ -89,7 +87,6 @@ Return the analytical expression for the spectraly normalized cumulative density
 *  `n=1` : The order of the level spacings.
 
 ## Returns
-*  `s` : Vector of the evaluation points.
 
 *  `u` : Vector of the cumulative probabilities.
 """
@@ -102,14 +99,29 @@ function gap_probability(model::Poisson, s)
     return @. exp(-s)
 end
 
+"""
+    number_variance(model::Model, l) → p::Vector
+
+Number variance.
+"""
 function number_variance(model::Poisson, l) 
   return l
 end 
 
+"""
+    rigidity(model::Model, l::Vector) → p::Vector
+
+Spectral rigidity.
+"""
 function rigidity(model::Poisson, l) 
     return l ./ 15.0
   end 
 
+  """
+    spectral_form_factor(model::Model, t) → p::Vector
+
+Spectral form factor.
+"""
 function spectral_form_factor(model::Poisson, t)
     return ones(length(t))
 end

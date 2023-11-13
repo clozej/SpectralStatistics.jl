@@ -113,6 +113,11 @@ function level_spacing_u(spect::UnfoldedSpectrum, pts::Vector{T}; n::Int = 1) wh
     return u_cdf(s, pts)
 end
 
+"""
+    level_spacing_ratio(spect::DataSample; shift::Int=1, n::Int = 1) → r::Vector
+
+Level spacing ratio.
+"""
 
 function level_spacing_ratio(spect::DataSample; shift::Int=1, n::Int = 1)
     s = level_spacing(spect, n=n)

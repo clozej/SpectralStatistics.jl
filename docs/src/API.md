@@ -24,6 +24,9 @@ level_spacing
 level_spacing_pdf
 level_spacing_cdf
 level_spacing_u
+number_variance
+rigidity
+spectral_form_factor
 ```
 
 ## Analytical models

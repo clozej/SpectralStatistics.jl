@@ -13,6 +13,11 @@ end
 =#
 
 #this version is slightly faster
+"""
+    spectral_form_factor(E::Vector{T}, t::T) → s::Vector
+
+Spectral form factor.
+"""
 function spectral_form_factor(E::Vector{T}, t::T) where T<:Real
     sff = complex(0.0)
     for e in E
