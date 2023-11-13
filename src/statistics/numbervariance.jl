@@ -39,6 +39,11 @@ function number_variance(E, L)
     return AveSig
 end
 
+"""
+    number_variance(spect::S, x::Vector{T}) → s::Vector
+
+Number variance.
+"""
 function number_variance(spect::S, x::Vector{T}) where {S<:DataSample, T<:Number} 
     E = spect.data
     Ls = x
