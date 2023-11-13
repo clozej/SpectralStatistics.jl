@@ -1,4 +1,4 @@
-#include("../src/SpectralStatistics.jl")
+
 using SpectralStatistics
 using Test
 
