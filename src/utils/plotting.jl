@@ -4,7 +4,7 @@ default_linewidth = 0.75
 
 
 #simple line plots
-function plot!(ax, x, y; 
+function plot_stat!(ax, x, y; 
     logy = false, logx = false,
     lineargs = Dict(:linewidth=>default_linewidth)
     )
@@ -21,19 +21,19 @@ function plot!(ax, x, y;
 end
 
 
-function plot!(ax, spectrum::D, statistic; limits=(0.0, 5.0), grid=200,
+function plot_stat!(ax, spectrum::D, statistic; limits=(0.0, 5.0), grid=200,
     logy = false, logx = false,
-    lineargs = Dict(:color=>:grey, :linewidth=>default_linewidth),
+    lineargs = Dict(:color=>:black, :linewidth=>default_linewidth),
     statargs = Dict()
     ) where {D<:DataSample}
     
     x = collect(range(limits[1], limits[2], grid))
     y = statistic(spectrum, x; statargs...)
     
-    plot!(ax,x,y;logx,logy,lineargs)
+    plot_stat!(ax,x,y;logx,logy,lineargs)
 end
 
-function plot!(ax, model::M, statistic; limits=(0.0, 5.0), grid=200,
+function plot_stat!(ax, model::M, statistic; limits=(0.0, 5.0), grid=200,
     logy = false, logx = false,
     lineargs = Dict(:linewidth=>default_linewidth),
     statargs = Dict()
@@ -42,7 +42,7 @@ function plot!(ax, model::M, statistic; limits=(0.0, 5.0), grid=200,
     x = collect(range(limits[1], limits[2], grid))
     y = statistic(model, x; statargs...)
     
-    plot!(ax,x,y;logx,logy,lineargs)
+    plot_stat!(ax,x,y;logx,logy,lineargs)
 end
 
 #plot difference

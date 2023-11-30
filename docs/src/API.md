@@ -1,5 +1,5 @@
 # API
-The followinig pages document and explain the functionality of all exported types and functions in the library.
+The following pages document and explain the functionality of all exported types and functions in the library.
 
 ## Index
 

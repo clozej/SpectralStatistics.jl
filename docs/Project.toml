@@ -1,5 +1,6 @@
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+SpectralStatistics = "26aafa55-59f7-45ac-9841-9c476cd28090"
 
 [compat]
 Documenter = "1.1"
