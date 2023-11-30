@@ -53,7 +53,7 @@ function unfold_spectrum(spect::DataSample, n::Int, cut_values)
     y = y ./ length(y)
     split_x = split_spectrum(x, cut_values)
     split_y = match_split(y, split_x)
-    fits = [Polynomials.fit(xi,yi,n).coeffs for (xi,yi) in zip(split_x,split_y)]  
+    fits = [Polynomials.fit(xi,yi,n+1).coeffs for (xi,yi) in zip(split_x,split_y)]  
     unfold_pieces = []
     for i in 1:length(split_x)
         x_i = split_x[i]
@@ -77,7 +77,7 @@ end
 function fit_integrated_density(spect::DataSample, n::Int) 
     x = spect.data
     y = [float(i) for i in 1:length(x)]
-    fit = Polynomials.fit(x,y,n)
+    fit = Polynomials.fit(x,y,n+1)
     return fit.coeffs
 end
 
