@@ -46,5 +46,6 @@ BerryRobnikBrody
 
 ```@docs
 unfold_spectrum
+fit_model
 ```
 

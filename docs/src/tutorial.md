@@ -1,5 +1,8 @@
 # Tutorial
-This section will guide you through everything you need to know for getting started with the SpectralStatistics.jl package. To learn more about spectral statistics and quantum chaos in general the books are a good place to start.
+This section will guide you through everything you need to know for getting started with the SpectralStatistics.jl package.
+
+!!! info "Quantum chaos"
+    To learn more about spectral statistics and quantum chaos in general the books *Quantum Chaos: An Introduction* by H.-J. Stöckmann  and *Quantum Signatures of Chaos* by F. Haake are a good place to start.
 
 ## Installation
 SpectralStatistics can be installed using the Julia package manager. Simply run:
@@ -40,9 +43,9 @@ function rectangle_spectrum(N; chi = 1.0*MathConstants.golden)
     return sort(spect)[1:N]
 end
 ```
-We set the parameter $$\chi$$ to the golden ratio by default. Let us compute the spectrum of the first 10000 levels:
+We set the parameter $$\chi$$ to the golden ratio by default. Let us compute the spectrum of the first 50000 levels:
 ```@example Tutorial; continued = true 
-spect = rectangle_spectrum(10000)
+spect = rectangle_spectrum(50000)
 ```
 The SpectralStatistics.jl package uses the `RealSpectrum` container to represent raw spectral data. This is the data we would obtain form an experiment or a numerical simulation. We pass our data to the container:
 ```@example Tutorial;
@@ -82,9 +85,62 @@ the second parameter must be a `Vector` of evaluation points. We can plot the re
 using CairoMakie
 f = Figure(resolution = (640,360))
 ax = Axis(f[1,1], xlabel=L"s", ylabel=L"P(s)")
-lines!(ax,s,p )
+lines!(ax,s,p)
 save("lsplot.svg", f); nothing # hide
 ```
 ![](lsplot.svg)
 
 ## Using models
+We will now compare the results with some analytical models. The library features many of the most used ones. For a complete list see the [API](@ref) section.
+Let us compare the level spacings with the Poisson model. To initialize a model we call its constructor:
+ ```@example Tutorial;
+poisson = Poisson()
+```
+We can check the characteristics of the model in the documentation [`Poisson`](@ref), where we read that it describes the spectral statistics of an integrable system.  
+This is a parameter-less model so the constructor takes no arguments. The level spacing probability density function for the Poisson model is an exponential decay
+```math
+P(s)=\exp(-s).
+```
+We can evaluate the analytical expression by calling the `level_spacing_pdf` on the model in the same way as we did for the spectral data:
+ ```@example Tutorial;
+p_poisson = level_spacing_pdf(poisson, s)
+```
+Let us add the result to the plot:
+ ```@example Tutorial;
+lines!(ax,s,p_poisson)
+save("lsplot2.svg", f); nothing # hide
+```
+![](lsplot2.svg)
+
+We see the model curve fits the data nicely and we can conclude the rectangular billiard belongs to the class of integrable systems. If this was a real application we might be satisfied with the analysis. However, just to demonstrate how to fit more complicated models we will try describing the data with another. Many models are actually parametric families, where the parameters are given as fields of the Julia type that codes the model. Let's use the [`Brody`](@ref) model. From the documentation we see this model interpolates between the `Poisson` and `GOE` models as the parameter `:beta` goes form 0.0 to 1.0. We initialize the model by calling:
+
+ ```@example Tutorial;
+brody = Brody()
+```
+Here we initialized the model with the default value of the parameter. We can see from the output this is equal to 1.0. To initialize the model with a different value of the parameter we simply call the constructor with the selected value as an argument: 
+
+ ```@example Tutorial;
+brody = Brody(0.2)
+```
+
+Some models might posses several parameters. One example is the [`BerryRobnikBrody`](@ref) model. To check all the names of the parameters we can use the `fieldnames` function on the associated type:
+ ```@example Tutorial;
+fieldnames(BerryRobnikBrody)
+```
+We see the parameters of this model are called `rho` and `beta`. To make sure we do not mix up the order of the parameters we may also initialize the model with keyword arguments corresponding to the names of the parameters:
+ ```@example Tutorial;
+brb = BerryRobnikBrody(beta=0.1,rho=0.5)
+```
+Note from the output that the parameters are initialized correctly regardless of the input order.
+Usually we want to fit the model to some data in order to find the optimal values of the parameters. We can do this with the `fit_model` function. This will return a new instance of the model with the adjusted fitting parameter. Since, we have the level spacings already stored we can call:
+ ```@example Tutorial;
+brody = fit_model(brody, level_spacing_pdf, s, p)
+```
+Here we chose to overwrite the variable `brody` with the a new instance with an adjusted parameter value. The second parameter is the statistic we wish to fit.
+We may also call:
+ ```@example Tutorial;
+brody = fit_model(unfolded, brody, level_spacing_pdf)
+```
+to compute the statistic directly from the spectrum if we did not do so beforehand. We see that the fitting parameter is almost 0 and it agrees with the Poisson model.
+
+To learn more about all the features of the library continue by exploring the [API](@ref) section.

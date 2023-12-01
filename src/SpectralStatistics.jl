@@ -4,6 +4,7 @@ using Polynomials, LsqFit
 using StatsBase
 using SpecialFunctions 
 using Base.MathConstants
+using InteractiveUtils
 
 export DataSample
 """
