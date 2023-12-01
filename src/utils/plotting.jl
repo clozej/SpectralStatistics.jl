@@ -1,4 +1,5 @@
 using Makie
+export plot_stat!, plot_diff!
 
 default_linewidth = 0.75
 
