@@ -8,7 +8,7 @@ function number_variance(E, L)
     j = 2 #index of first state in interval
     k = 2 #index of last state in interval
     x = E[1] #current energy
-    largest_energy = E[end - Int(ceil(L)+10)] #to make sure interval does not go out of energy bounds
+    largest_energy = E[end - (Int(ceil(L)+100))] #to make sure interval does not go out of energy bounds
     while x < largest_energy
         #move index k
         while E[k] < x+L

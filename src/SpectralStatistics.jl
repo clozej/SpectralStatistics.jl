@@ -30,7 +30,7 @@ the analytical spectral statistics models in the SpectralStatistics.jl library.
 
 """
 abstract type Model end
-
+include("models/modelutils.jl")
 include("models/poisson.jl")
 include("models/goe.jl")
 include("models/gue.jl")

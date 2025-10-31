@@ -28,7 +28,7 @@ struct Poisson <: Model end
 #first argument of all functions is the variable
 
 """
-    level_spacing_pdf(model::Model, pts::Vector; n::Int = 1) → p::Vector
+    level_spacing_pdf(model::Model, pts::Vector; n::Int = 0) → p::Vector
 
 Return the analytical expression for the level spacing probability density function, corresponding to the chosen model, evaluated at positions `pts`.
 
@@ -41,18 +41,18 @@ The nearest neighbour level spacing distributions are the most commonly studied 
 * `pts`: The positions where probabability density function should be evaluated.
 
 ## Keyword arguments
-*  `n=1` : The order of the level spacings.
+*  `n::Int = 0` : The order of the level spacings.
 
 ## Returns
 
 *  `p` : Vector of the probabilites.
 """
-function level_spacing_pdf(model::Poisson, s ; n=1)
-    return @. n^n/factorial(n-1) * s^(n-1) * exp(-n*s)
+function level_spacing_pdf(model::Poisson, s ; n::Int = 0)
+    return @. s^n/factorial(n)*exp(-s)
 end
 
 """
-    level_spacing_cdf(model::Model, pts::Vector; n::Int = 1) → w::Vector
+    level_spacing_cdf(model::Model, pts::Vector; n::Int = 0) → w::Vector
 
 Return the analytical expression for level spacing cumulative density function, corresponding to the chosen model, evaluated at positions `pts`.
 
@@ -62,18 +62,18 @@ Return the analytical expression for level spacing cumulative density function, 
 * `pts`: The positions where cumulative density function should be evaluated.
 
 ## Keyword arguments
-*  `n=1` : The order of the level spacings.
+*  `n::Int = 0` : The order of the level spacings.
 
 ## Returns
 
 *  `w` : Vector of the cumulative probabilities.
 """
-function level_spacing_cdf(model::Poisson, s; n=1)
-    return @. 1.0 - gamma(n, n*s)/gamma(n)
+function level_spacing_cdf(model::Poisson, s; n::Int = 0)
+    return @. 1.0 - gamma(n+1, s)/factorial(n)
 end
 
 """
-    level_spacing_u(model::Model, pts::Vector; n::Int = 1) → u::Vector
+    level_spacing_u(model::Model, pts::Vector; n::Int = 0) → u::Vector
 
 Return the analytical expression for the spectraly normalized cumulative density function of the nearest neighbour level spacings evaluated at positions `pts`.
 
@@ -84,7 +84,7 @@ Return the analytical expression for the spectraly normalized cumulative density
 * `pts`: The positions where cumulative density function should be evaluated.
 
 ## Keyword arguments
-*  `n=1` : The order of the level spacings.
+*  `n::Int = 0` : The order of the level spacings.
 
 ## Returns
 

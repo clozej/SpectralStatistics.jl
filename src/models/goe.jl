@@ -27,21 +27,15 @@ struct GOE <: Model end
 
 #first argument of all functions is the model 
 
-function level_spacing_pdf(model::GOE, s; n=1)
+function level_spacing_pdf(model::GOE, s; n::Int = 0)
     #Wigner surmises for higher orders Wen-Jia Rao
     beta = 1.0 #level repulsion
-    a = 0.5*n*(n+1.0)*beta + n -1
-    A =  (gamma(0.5*a + 1.0)/gamma(0.5*a + 0.5) )^2.0 
-    C = (2.0*(gamma(0.5*a + 1.0))^(a + 1.0)) / ((gamma(0.5*a + 0.5))^(a + 2.0))
-    return @. C * s^a * exp(-A * s^2.0)
+    return wigner_surmise_pdf(s, beta, n+1)
 end
 
-function level_spacing_cdf(model::GOE, s; n=1)
+function level_spacing_cdf(model::GOE, s; n::Int = 0)
     beta = 1.0 #level repulsion
-    a = 0.5*n*(n+1.0)*beta + n -1
-    A =  (gamma(0.5*a + 1.0)/gamma(0.5*a + 0.5) )^2.0 
-    C = (2.0*(gamma(0.5*a + 1.0))^(a + 1.0)) / ((gamma(0.5*a + 0.5))^(a + 2.0))
-    return @. 0.5*C*s^(1.0 + a)*(A*s^2.0)^(0.5*(-1.0 - a))*(gamma((1.0 + a)*0.5) - gamma((1.0 + a)*0.5, A*s^2.0))
+    return wigner_surmise_cdf(s, beta, n+1)
 end
 
 function level_spacing_u(model::GOE, s)

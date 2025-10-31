@@ -1,3 +1,5 @@
+export moving_average
+
 function split_spectrum(spect, cut_value::T) where T<:Real
     idx = searchsortedfirst(spect, cut_value)
     return [spect[1:idx-1], spect[idx:end]]
